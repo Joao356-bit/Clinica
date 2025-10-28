@@ -18,7 +18,6 @@ const swaggerSpec = {
     version: '1.0.0',
     description: 'API para gerenciamento de pacientes (CRUD) - OAT2 de Sistemas de Informação',
   },
-  servers: [ { url: 'http://localhost:3001' } ],
   paths: {
     '/pacientes': {
       post: {
