@@ -1,9 +1,12 @@
+
 require('dotenv').config(); 
 const express = require('express');
 const mongoose = require('mongoose');
 const swaggerUi = require('swagger-ui-express');
+
 const app = express();
 app.use(express.json());
+
 const pacientesRoutes = require('./routes/pacientesRoutes.js');
 app.use('/pacientes', pacientesRoutes); 
 
@@ -11,72 +14,17 @@ app.get('/', (req, res) => {
     res.send('API da Clínica de Fisioterapia no ar!');
 });
 
-const swaggerSpec = {
+const simpleSwaggerDoc = {
   openapi: '3.0.0',
   info: {
-    title: 'API de Clínica de Fisioterapia',
+    title: 'TESTE SIMPLES DE SWAGGER',
     version: '1.0.0',
-    description: 'API para gerenciamento de pacientes (CRUD) - OAT2 de Sistemas de Informação',
+    description: 'Se isto aparecer, o problema é o JSON antigo.'
   },
-  servers: [ 
-    { 
-      url: 'https://clinica-lake-seven.vercel.app',
-      description: 'Servidor de Produção (Vercel)' 
-    } 
-  ],
-  paths: {
-    '/pacientes': {
-      post: {
-        summary: 'Cria um novo paciente',
-        requestBody: {
-          required: true,
-          content: { 'application/json': { schema: { $ref: '#/components/schemas/Paciente' } } }
-        },
-        responses: { '201': { description: 'Paciente criado com sucesso.' } }
-      },
-      get: {
-        summary: 'Lista todos os pacientes',
-        responses: { '200': { description: 'Lista de pacientes.' } }
-      }
-    },
-    '/pacientes/{id}': {
-      get: {
-        summary: 'Busca um paciente por ID',
-        parameters: [ { in: 'path', name: 'id', required: true, schema: { type: 'string' } } ],
-        responses: { '200': { description: 'Dados do paciente.' }, '404': { description: 'Paciente não encontrado.' } }
-      },
-      put: {
-        summary: 'Atualiza um paciente por ID',
-        parameters: [ { in: 'path', name: 'id', required: true, schema: { type: 'string' } } ],
-        requestBody: {
-          required: true,
-          content: { 'application/json': { schema: { $ref: '#/components/schemas/Paciente' } } }
-        },
-        responses: { '200': { description: 'Paciente atualizado.' }, '404': { description: 'Paciente não encontrado.' } }
-      },
-      delete: {
-        summary: 'Deleta um paciente por ID',
-        parameters: [ { in: 'path', name: 'id', required: true, schema: { type: 'string' } } ],
-        responses: { '200': { description: 'Paciente deletado com sucesso.' }, '404': { description: 'Paciente não encontrado.' } }
-      }
-    }
-  },
-  components: {
-    schemas: {
-      Paciente: {
-        type: 'object',
-        properties: {
-          nomeCompleto: { type: 'string', description: 'Nome do paciente.' },
-          cpf: { type: 'string', description: 'CPF (único).' },
-          sessoesContratadas: { type: 'number', description: 'Total de sessões.' },
-          problemas: { type: 'array', items: { type: 'string' }, description: 'Lista de problemas/diagnósticos.' }
-        }
-      }
-    }
-  }
+  paths: {} 
 };
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(simpleSwaggerDoc));
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
