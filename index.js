@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 const pacientesRoutes = require('./routes/pacientesRoutes.js');
 app.use('/pacientes', pacientesRoutes); 
+
 app.get('/', (req, res) => {
     res.send('API da Clínica de Fisioterapia no ar!');
 });
@@ -69,12 +70,6 @@ const swaggerSpec = {
           cpf: { type: 'string', description: 'CPF (único).' },
           sessoesContratadas: { type: 'number', description: 'Total de sessões.' },
           problemas: { type: 'array', items: { type: 'string' }, description: 'Lista de problemas/diagnósticos.' }
-        },
-        example: {
-          nomeCompleto: "Maria Souza",
-          cpf: "111.222.333-44",
-          sessoesContratadas: 10,
-          problemas: ["Dor no joelho", "Pós-operatório"]
         }
       }
     }
