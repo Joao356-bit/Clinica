@@ -5,7 +5,6 @@ const app = express();
 app.use(express.json());
 const pacientesRoutes = require('./routes/pacientesRoutes.js');
 app.use('/pacientes', pacientesRoutes); 
-
 app.get('/', (req, res) => {
     res.send('API da Clínica de Fisioterapia no ar!');
 });
